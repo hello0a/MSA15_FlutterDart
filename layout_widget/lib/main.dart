@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:layout_widget/screens/detail_screen.dart';
+import 'package:layout_widget/screens/gridview_screen.dart';
 import 'package:layout_widget/screens/listview_screen.dart';
 
 void main() {
@@ -12,7 +14,11 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ListviewScreen()
+      title: '레이아웃 위젯',
+      home: 
+      ListviewScreen()
+      // GridviewScreen()
+      // DetailScreen()
     );
   }
 }
