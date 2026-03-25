@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:calendar_date_picker2/calendar_date_picker2.dart' as picker;
 
 class JoinScreen extends StatefulWidget {
   const JoinScreen({super.key});
@@ -20,6 +21,42 @@ class _JoinScreenState extends State<JoinScreen> {
   final TextEditingController _birthController = TextEditingController();
 
   String _gender = "남자";
+
+  final config = picker.CalendarDatePicker2Config(
+    // 캘린더 타입 : single, multi, range
+    calendarType: picker.CalendarDatePicker2Type.range,
+    // 선택한 날짜 색상
+    selectedDayHighlightColor: Colors.redAccent,
+    // 요일 라벨
+    weekdayLabels: ['일','월','화','수','목','금','토'],
+    // 요일 스타일
+    weekdayLabelTextStyle: const TextStyle(
+      color: Colors.black54,
+      fontWeight: FontWeight.bold
+    ),
+    // 시작 요일 : 0 (일), 1(월)
+    firstDayOfWeek: 0,
+    // 컨트롤 높이 사이즈
+    controlsHeight: 50,
+    // 날짜 스타일
+    dayTextStyle: const TextStyle(
+      color: Colors.black,
+    ),
+    // 비활성화된 날짜 스타일
+    disabledDayTextStyle: const TextStyle(
+      color: Colors.grey
+    ),
+    // 선택가능한 날짜 설정
+    // DateTime.now() : 현재 날짜 시간          - 2025/09/01
+    // difference()   : 두 날짜 객체 간의 차이
+    // DateTime.now().subtract(const Duration(days: 1)) 
+    // : 오늘 날짜에서 1일을 뺀 값              - 2025/08/31
+    // day.difference( 어제 ) : 선택된 날짜와 어제 날짜 사이의 시간 간격 
+    // isNegative : 음수인 확인 (특정 날짜와 어제 날짜 사이의 차이 음수면 true)
+    selectableDayPredicate: (day) => !day
+                                  .difference(DateTime.now().subtract(const Duration(days: 1)))
+                                  .isNegative,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -133,6 +170,46 @@ class _JoinScreenState extends State<JoinScreen> {
                         suffixIcon: GestureDetector(
                           onTap: () async {
                             print("생년월일 달력 아이콘 클릭");
+                            final result = await showDialog(
+                              context: context, builder: (context) {
+                                return Dialog(
+                                  child: picker.CalendarDatePicker2(
+                                    // 캘린더 설정
+                                    config: picker.CalendarDatePicker2Config(
+                                      calendarType: picker.CalendarDatePicker2Type.single,
+                                      selectedDayHighlightColor: Colors.orange,
+                                      weekdayLabels: ["월", "화", "수", "목", "금", "토", "일"],
+                                    ), 
+                                    // config: config,
+                                    value: [],
+                                    // 달력에서 선택한 값 변경 시
+                                    onValueChanged: (dates) {
+                                      print(dates[0]);
+                                      if (dates.isNotEmpty) {
+                                        // 선택한 날짜 반환하면서 showDialog 닫기
+                                        // result에 담겨지는 것
+                                        // 리스트로 반환(?)
+                                        Navigator.pop(context, dates);
+                                        // 날짜 하나만 반환(?)
+                                        // Navigator.pop(context, dates[0]);
+                                      }
+                                    },
+                                  )
+                                );
+                              }
+                            );
+                            if (result != null && result.isNotEmpty) {
+                              print(result);
+                              // 선택된 날짜 - 2026/03/25
+                              final selectedDate = result[0];
+                              final formatDate
+                                = "${selectedDate.year}/"
+                                  "${selectedDate.month.toString().padLeft(2, '0')}/"
+                                  "${selectedDate.day.toString().padLeft(2, '0')}";
+                              print(formatDate);
+                              // 생년월일 입력에, 달력에서 선택한 값 지정
+                              _birthController.text = formatDate;
+                            }
                           },
                           child: Icon(Icons.calendar_month),
                         )
