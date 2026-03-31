@@ -396,9 +396,9 @@ class _HomePageState extends State<HomePage> {
         Expanded(
           child: ListView.builder(
             padding: const EdgeInsets.all(8),
-            itemCount: _diaryList.length,
+            itemCount: _filteredList.length,
             itemBuilder: (context, index) {
-              final entry = _diaryList[index];
+              final entry = _filteredList[index];
               final date = entry.date;
               final isSelected = _selectedPaths.contains(entry.path);
 
