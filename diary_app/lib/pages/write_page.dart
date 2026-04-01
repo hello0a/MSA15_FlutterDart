@@ -104,7 +104,9 @@ final FileService _fileService = FileService();
       ),
       bottomSheet: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+          // padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+          // 하단에 있는 시스템 Navigation Bar 위로 BottomSheet 버튼 겹치는 문제 해결
+          padding: EdgeInsets.fromLTRB(16, 8, 16, 80 + MediaQuery.of(context).padding.bottom + 12),
           child: SizedBox(
             width: double.infinity,
             height: 52,

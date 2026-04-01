@@ -187,7 +187,7 @@ class _DetailPageState extends State<DetailPage> {
       ),
       bottomSheet: !_isEditing ? null : SafeArea(
         child: Padding(
-          padding: EdgeInsetsGeometry.fromLTRB(16, 8, 16, 12),
+          padding: EdgeInsets.fromLTRB(16, 8, 16, 80 + MediaQuery.of(context).padding.bottom + 12),
           child: SizedBox(
             width: double.infinity,
             height: 52,

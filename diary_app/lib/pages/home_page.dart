@@ -466,7 +466,7 @@ class _HomePageState extends State<HomePage> {
         if( _selectedPaths.isNotEmpty ) 
         SafeArea(
           child: Padding( 
-            padding: EdgeInsets.fromLTRB(16, 8, 16, 16),
+            padding: EdgeInsets.fromLTRB(16, 8, 16, 80 + MediaQuery.of(context).padding.bottom + 12),
             child: SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(

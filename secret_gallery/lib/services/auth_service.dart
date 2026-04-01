@@ -4,7 +4,7 @@ class AuthService {
   static const _appPasswordKey = 'app_password';
 
   // 앱 비밀번호 존재 확인
-  Future<bool> hadAppPassword() async {
+  Future<bool> hasAppPassword() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.containsKey(_appPasswordKey);
   }

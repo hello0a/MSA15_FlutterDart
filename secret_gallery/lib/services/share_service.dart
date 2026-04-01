@@ -14,4 +14,5 @@ class ShareService {
     );
     await SharePlus.instance.share( params );
   }
+  
 }
